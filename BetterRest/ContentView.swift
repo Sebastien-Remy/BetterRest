@@ -10,33 +10,47 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var wakeUp = Date()
-    
+    @State private var sleepAmount = 8.0
+    @State private var coffeeAmount = 1
     
     var body: some View {
-
-        // Compnents
-        var components = DateComponents()
-        components.hour = 8
-        components.minute = 0
-        _ = Calendar.current.date(from: components) ?? Date()
         
-        // let components = Calendar.current.dateComponents([.hour, .minute], from: someDate)
-        // let hour = components.hour ?? 0
-        // let minute = components.minute ?? 0
-        
-        // Formater
-        let formatter = DateFormatter()
-        formatter.timeStyle = .short
-        _ = formatter.string(from: Date())
-
-        
-        return DatePicker("Please enter a date",
-                   selection: $wakeUp,
-                   displayedComponents: .hourAndMinute)
-//                   in: Date()...)
-        
-            .labelsHidden()
-        
+        NavigationView {
+            VStack {
+                Text("When do you want to wake up?")
+                    .font(.headline)
+                DatePicker("Please select a tilme",
+                           selection: $wakeUp,
+                           displayedComponents: .hourAndMinute)
+                    .labelsHidden()
+                
+                Text("Desire amount of sleep")
+                    .font(.headline)
+                Stepper(value: $sleepAmount, in: 4...12, step: 0.25) {
+                    Text("\(sleepAmount, specifier: "%g") hours")
+                }
+                
+                Text("Daily coffe intake")
+                    .font(.headline)
+                Stepper(value:$coffeeAmount, in: 1...20) {
+                    if coffeeAmount == 1 {
+                        Text("1 cup")
+                    } else {
+                        Text("\(coffeeAmount) cups")
+                    }
+                }
+                
+            }
+            .navigationBarTitle("Better Rest")
+            .navigationBarItems(trailing:
+                Button(action: calculateBedTime) {
+                    Text("Calculate")
+                }
+            )
+        }
+    }
+    
+    func calculateBedTime() {
     }
 }
 
