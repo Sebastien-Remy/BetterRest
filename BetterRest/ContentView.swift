@@ -47,7 +47,7 @@ struct ContentView: View {
                             }
                     }
                     .labelsHidden()
-                    .datePickerStyle(WheelDatePickerStyle())
+                    .pickerStyle(WheelPickerStyle())
                 }
                 Section {
                     Text ("You may go to bed at: \(calculateBedTime)")
